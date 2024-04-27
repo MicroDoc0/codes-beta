@@ -99,14 +99,6 @@
       for (let i = 0; i < 8; i++) {
         code1 += characters.charAt(Math.floor(Math.random() * characters.length));
       }
-
-      let numcode1 = "";
-      const digits = "0123456789"; // String containing only digits
-
-      for (let i = 0; i < 6; i++) {
-      const randomIndex = Math.floor(Math.random() * digits.length);
-      code1 += digits.charAt(randomIndex);
-      }
       
       // Extract initials considering spaces and ignoring symbols
       const usernameWithoutSymbols = username.replace(/[^a-zA-Z ]/g, ""); // Remove symbols
@@ -130,6 +122,14 @@
         }
       }
 
+      let numcode1 = "";
+      const digits = "0123456789"; // String containing only digits
+
+      for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * digits.length);
+      code1 += digits.charAt(randomIndex);
+      }
+      
       // Replace spaces with your preferred character (dash or underscore)
       const usernameWithReplacement = username.replace(/\s/g, "-"); // Replace with dash
       // You can change the "-" to "_" for underscore
