@@ -100,6 +100,14 @@
         code1 += characters.charAt(Math.floor(Math.random() * characters.length));
       }
 
+      let numcode1 = "";
+      const digits = "0123456789"; // String containing only digits
+
+      for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * digits.length);
+      code1 += digits.charAt(randomIndex);
+      }
+      
       // Extract initials considering spaces and ignoring symbols
       const usernameWithoutSymbols = username.replace(/[^a-zA-Z ]/g, ""); // Remove symbols
 
@@ -127,7 +135,7 @@
       // You can change the "-" to "_" for underscore
 
       // Format the final code
-      const finalCode = usernameWithReplacement + "-" + code1 + "ans" + initials;
+      const finalCode = usernameWithReplacement + "-" + code1 + "ans" + initials + code2 ;
 
       // Display the generated code and instructions
       document.getElementById("codeDisplay").innerHTML = "Your Code:<br>" + finalCode;
