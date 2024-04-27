@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #33475b; /* Set background color here */
+    }
+
+    .container {
+      background-color: #f5f5f5;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    #usernameInput,
+    #generateCodeButton {
+      width: 200px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    #usernameInput {
+      background-color: #eee;
+    }
+
+    #generateCodeButton {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    #codeDisplay {
+      color: #eee;
+      font-weight: bold;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    /* New class for generated code and label */
+    .generated-code {
+      font-weight: bold;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    /* Adjust line-height for better spacing (optional) */
+    .generated-code br {
+      line-height: 1.523;
+    }
+
+    .code {
+      font-size: 36px; /* Adjust font size for the generated code (header) */
+    }
+    
+    .instructions {
+  color: #ffffff; /* Set your desired text color */
+    }
+  </style>
+</head>
+<body>
+  <p id="codeDisplay" class="generated-code"></p>
+  <div class="container">
+    <input type="text" id="usernameInput" placeholder="Enter your Patreon Username">
+    <button id="generateCodeButton">Generate Code</button>
+  </div>
+
+  <p id="instructions" class="instructions">Please DM Our ModMail bot with the code above. (Include your Patreon username for verification.)</p>
+
+  <script>
+    const generateCodeButton = document.getElementById("generateCodeButton");
+    generateCodeButton.addEventListener("click", generateCode);
+
+    function generateCode() {
+      // Get username without modification
+      const username = document.getElementById("usernameInput").value;
+
+      // Input validation (optional)
+      if (username === "") {
+        alert("Please enter your Patreon username.");
+        return;
+      }
+
+      // Generate random 4-letter strings
+      const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      let code1 = "";
+      for (let i = 0; i < 8; i++) {
+        code1 += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+
+      // Extract initials considering spaces and ignoring symbols
+      const usernameWithoutSymbols = username.replace(/[^a-zA-Z ]/g, ""); // Remove symbols
+
+      let initials = "";
+      if (usernameWithoutSymbols.includes(" ")) {
+        // Extract initials from each word (for usernames with spaces)
+        const words = usernameWithoutSymbols.split(" ");
+        for (const word of words) {
+          if (word.length > 0) {
+            initials += word.charAt(0).toUpperCase();
+          }
+        }
+      } else {
+        // Extract all capital letters as initials (improved for single words)
+        for (let i = 0; i < usernameWithoutSymbols.length; i++) {
+          const char = usernameWithoutSymbols.charAt(i);
+          if (char.toUpperCase() === char) { // Check if character is uppercase
+            initials += char;
+          }
+        }
+      }
+
+      // Replace spaces with your preferred character (dash or underscore)
+      const usernameWithReplacement = username.replace(/\s/g, "-"); // Replace with dash
+      // You can change the "-" to "_" for underscore
+
+      // Format the final code
+      const finalCode = usernameWithReplacement + "-" + code1 + "ans" + initials;
+
+      // Display the generated code and instructions
+      document.getElementById("codeDisplay").innerHTML = "Your Code:<br>" + finalCode;
+    }
+  </script>
+</body>
+</html>
