@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-  <title> CodeGen </title>
+  <title> CodeGen BETA </title>
   <link rel="shortcut icon" type="image/x-icon" href="vcb_up-to.ico">
   <style>
     body {
@@ -65,7 +64,7 @@
     .code {
       font-size: 36px; /* Adjust font size for the generated code (header) */
     }
-    
+  
     .instructions {
   color: #ffffff; /* Set your desired text color */
     }
@@ -81,66 +80,87 @@
   <p id="instructions" class="instructions">Please DM Our ModMail bot with the code above. (Include your Patreon username for verification.)</p>
 
   <script>
-    const generateCodeButton = document.getElementById("generateCodeButton");
-    generateCodeButton.addEventListener("click", generateCode);
+  const generateCodeButton = document.getElementById("generateCodeButton");
+  generateCodeButton.addEventListener("click", generateCode);
 
-    function generateCode() {
-      // Get username without modification
-      const username = document.getElementById("usernameInput").value;
+  function generateCode() {
+    // Get username without modification
+    const username = document.getElementById("usernameInput").value;
 
-      // Input validation (optional)
-      if (username === "") {
-        alert("Please enter your Patreon username.");
-        return;
-      }
-
-      // Generate random 4-letter strings
-      const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      let code1 = "";
-      for (let i = 0; i < 8; i++) {
-        code1 += characters.charAt(Math.floor(Math.random() * characters.length));
-      }
-
-      // Generate random 6-digit numbers
-      let numcode = "";
-      const digits = "0123456789";
-      for (let i = 0; i < 6; i++) {
-        const randomIndex = Math.floor(Math.random() * digits.length);
-        numcode += digits.charAt(randomIndex);
-      }
-
-      // Extract initials considering spaces and ignoring symbols
-      const usernameWithoutSymbols = username.replace(/[^a-zA-Z ]/g, ""); // Remove symbols
-
-      let initials = "";
-      if (usernameWithoutSymbols.includes(" ")) {
-        // Extract initials from each word (for usernames with spaces)
-        const words = usernameWithoutSymbols.split(" ");
-        for (const word of words) {
-          if (word.length > 0) {
-            initials += word.charAt(0).toUpperCase();
-          }
-        }
-      } else {
-        // Extract all capital letters as initials (improved for single words)
-        for (let i = 0; i < usernameWithoutSymbols.length; i++) {
-          const char = usernameWithoutSymbols.charAt(i);
-          if (char.toUpperCase() === char) { // Check if character is uppercase
-            initials += char;
-          }
-        }
-      }
-
-      // Replace spaces with your preferred character (dash or underscore)
-      const usernameWithReplacement = username.replace(/\s/g, "-"); // Replace with dash
-      // You can change the "-" to "_" for underscore
-
-      // Format the final code (using extracted initials)
-      const finalCode = usernameWithReplacement + "_" + code1 + "ans" + initials + "-" + numcode;
-
-      // Display the generated code and instructions
-      document.getElementById("codeDisplay").innerHTML = "Your Code:<br>" + finalCode;
+    // Input validation (optional)
+    if (username === "") {
+      alert("Please enter your Patreon username.");
+      return;
+    } else if (username.length < 1 || username.length > 70) {
+      alert("Username must be between 1 and 70 characters long.");
+      return;
     }
+
+    // Generate random 4-letter strings
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let code1 = "";
+    for (let i = 0; i < 8; i++) {
+      code1 += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    // Generate random 6-digit numbers
+    let numcode = "";
+    const digits = "0123456789";
+    for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * digits.length);
+      numcode += digits.charAt(randomIndex);
+    }
+
+    // Extract initials considering spaces and ignoring symbols
+    const usernameWithoutSymbols = username.replace(/[^a-zA-Z ]/g, ""); // Remove symbols
+
+    let initials = "";
+    if (usernameWithoutSymbols.includes(" ")) {
+      // Extract initials from each word (for usernames with spaces)
+      const words = usernameWithoutSymbols.split(" ");
+     for (const word of words) {
+        if (word.length > 0) {
+          initials += word.charAt(0).toUpperCase();
+        }
+      }
+    } else {
+      // Extract all capital letters as initials (improved for single words)
+      for (let i = 0; i < usernameWithoutSymbols.length; i++) {
+        const char = usernameWithoutSymbols.charAt(i);
+        if (char.toUpperCase() === char) { // Check if character is uppercase
+          initials += char;
+        }
+      }
+    }
+
+    // Replace spaces with your preferred character (dash or underscore)
+    let usernameWithReplacement = username.replace(/\s/g, "-"); // Replace with dash
+    // You can change the "-" to "_" for underscore
+
+    // Define list of options for "ans" replacement
+    const ansOptions = ["ie", "ette", "ans", "ant", "ard", "ment", "ness", "ley", "lyn", "et", ""]; // Customize options (shorter options to fit within limit)
+
+    // Generate a random index within the options list
+    const randomIndex = Math.floor(Math.random() * ansOptions.length);
+
+    // Replace "ans" with the randomly chosen option
+    const randomAns = ansOptions[randomIndex];
+
+    // Format the final code (using extracted initials)
+    let finalCode = usernameWithReplacement + "-" + code1 + randomAns + initials + "-" + numcode;
+
+    // Check final code length and adjust if necessary
+    if (finalCode.length > 65) {
+      // Shorten username if it's too long
+      if (usernameWithReplacement.length > 30) {
+        usernameWithReplacement = usernameWithReplacement.substring(0, 30) + "...";
+      }
+      finalCode = usernameWithReplacement + "-" + code1.substring(0, 6) + randomAns + initials + "-" + numcode;
+    }
+
+    // Display the generated code and instructions
+    document.getElementById("codeDisplay").innerHTML = "Your Code:<br>" + finalCode;
+  }
   </script>
 </body>
 </html>
