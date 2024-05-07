@@ -110,13 +110,25 @@
       code1 += characters.charAt(Math.floor(Math.random() * characters.length));
     }
 
-    // Generate random 6-digit numbers
-    let numcode = "";
-    const digits = "0123456789";
+    // Generate random 6-digit numbers  
+  let numcode = "";
+  const digits = "0123456789";
+
+  if (username === "sans") {
+    // Special case for username "sans"
+    numcode = "0";
+    for (let i = 0; i < 2; i++) { // Loop only twice
+      const randomIndex = Math.floor(Math.random() * digits.length);
+      numcode += digits.charAt(randomIndex);
+    }
+    numcode += "420";
+  } else {
+    // Generate random 6-digit number for other usernames
     for (let i = 0; i < 6; i++) {
       const randomIndex = Math.floor(Math.random() * digits.length);
       numcode += digits.charAt(randomIndex);
     }
+  }
 
     // Extract initials considering spaces and ignoring symbols
     const usernameWithoutSymbols = username.replace(/[^a-zA-Z ]/g, ""); // Remove symbols
