@@ -145,7 +145,7 @@
     // You can change the "-" to "_" for underscore
 
     // Define list of options for "ans" replacement
-    const ansOptions = ["ie", "ette", "ans", "ant", "ard", "ment", "ness", "ley", "lyn", "et", ""]; // Customize options (shorter options to fit within limit)
+    const ansOptions = (username === "sans") ? ["ness"] : ["ie", "ette", "ness", "ans", "ant", "ard", "ment", "ley", "lyn", "et", ""];  // Customize options (shorter options to fit within limit)
 
     // Generate a random index within the options list
     const randomIndex = Math.floor(Math.random() * ansOptions.length);
